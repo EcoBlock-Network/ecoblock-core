@@ -28,4 +28,10 @@ fn tangle_block_construction() {
 
     let block = TangleBlock {
         id: "block1".into(),
-        parents: vec!["parent1".into(), "parent2".into()]
+        parents: vec!["parent1".into(), "parent2".into()],
+        data,
+        signature,
+    };
+
+    assert_eq!(block.parents.len(), 2);
+}

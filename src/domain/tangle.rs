@@ -1,7 +1,8 @@
 use serde::{Serialize, Deserialize};
 
 use crate::domain::SensorData;
-use crate::traits::Signature;
+use crate::traits::{Signature, Signable};
+
 
 /// A block of environmental data in the local Tangle DAG.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -28,5 +29,15 @@ impl TangleBlock {
             id,
             ..temp
         }
+    }
+}
+
+impl Signable for TangleBlock {
+    fn payload(&self) -> Vec<u8> {
+        serde_json::to_vec(&(
+            &self.parents,
+            &self.data,
+        ))
+        .unwrap_or_default()
     }
 }

@@ -1,4 +1,6 @@
 use ecoblock_core::{SensorData, NodeId, TangleBlock, Signature};
+use serde_json;
+
 
 #[test]
 fn sensor_data_can_be_created() {
@@ -35,3 +37,21 @@ fn tangle_block_construction() {
 
     assert_eq!(block.parents.len(), 2);
 }
+
+#[test]
+fn tangle_block_serialization_to_json() {
+    let block = TangleBlock {
+        id: "abc".into(),
+        parents: vec![],
+        data: SensorData {
+            pm25: 1.0, co2: 400.0, temperature: 21.0, humidity: 45.0,
+            timestamp: 123,
+        },
+        signature: Signature("sig".into()),
+    };
+
+    let json = serde_json::to_string(&block).unwrap();
+    assert!(json.contains("abc"));
+    assert!(json.contains("sig"));
+}
+

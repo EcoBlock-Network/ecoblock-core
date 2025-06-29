@@ -11,3 +11,22 @@ pub struct TangleBlock {
     pub data: SensorData,
     pub signature: Signature,
 }
+
+
+impl TangleBlock {
+    pub fn new_unsigned(parents: Vec<String>, data: SensorData) -> Self {
+        let temp = TangleBlock {
+            id: String::new(),
+            parents,
+            data,
+            signature: Signature("".into()),
+        };
+
+        let id = blake3::hash(&temp.payload()).to_hex().to_string();
+
+        Self {
+            id,
+            ..temp
+        }
+    }
+}

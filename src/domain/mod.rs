@@ -2,6 +2,8 @@
 
 pub mod sensor;
 pub mod tangle;
+pub mod tangle_data;
 
 pub use sensor::{SensorData, NodeId};
 pub use tangle::TangleBlock;
+pub use tangle_data::TangleBlockData;
